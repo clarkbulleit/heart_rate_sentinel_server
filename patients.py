@@ -1,10 +1,13 @@
 from pymodm import connect
+from pymodm import MongoModel, fields
+
 connect("mongodb://<dbuser>:<dbpassword>@ds037778.mlab.com:37778/patients_cb329")
 
-class patient(MongoModel):
-    email = fields.EmailField(primary_key=True)
-    first_name = fields.CharField()
-    last_name = fields.CharField()
-    password = fields.CharField()
+
+class Patient(MongoModel):
+    patient_id = fields.IntegerField(primary_key=True)
+    attending_email = fields.EmailField()
+    user_age = fields.IntegerField()
+    heart_rate = fields.ListField()
 
 
