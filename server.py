@@ -21,6 +21,7 @@ def status(patient_id):
 def get_heart_rate(patient_id):
     return
 
+
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
 def average_heart_rate(patient_id):
     return
