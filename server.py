@@ -17,7 +17,6 @@ def new_patient():
     p = Patient(r['patient_id'], attending_email=r['attending_email'],
                 user_age=r['user_age'])
     p.save()
-
     result = {
         "message": "Added user {0} successfully "
                    "to the class list".format(request.json["patient_id"])
