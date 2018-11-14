@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from patients import Patient
 from pymodm import connect
 from validate_inputs import validate_inputs
+import datetime
 app = Flask(__name__)
 
 
@@ -19,7 +20,7 @@ def new_patient():
     p.save()
     result = {
         "message": "Added user {0} successfully "
-                   "to the class list".format(request.json["patient_id"])
+                   "to the patient database".format(request.json["patient_id"])
     }
 
     return jsonify(result)
@@ -27,7 +28,20 @@ def new_patient():
 
 @app.route("/api/heart_rate", methods=["POST"])
 def post_heart_rate():
-    return
+    r = request.get_json()
+    timestamp = datetime.datetime.now()
+
+    Patient.update(
+        {'_id': r['patient_id']},
+        {'$push': {'heart_rate': r['heart_rate']}},
+        {'$push': {'time': timestamp}}
+                   )
+
+    result = {
+        "message": "Added heart rate data for user {0} successfully "
+                   "to the patient database".format(request.json["patient_id"])
+    }
+    return jsonify(result)
 
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
