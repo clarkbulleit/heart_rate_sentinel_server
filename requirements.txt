@@ -4,3 +4,5 @@ Flask
 numpy
 sphinx
 pymodm
+pytest-pep8
+pytest-cov
