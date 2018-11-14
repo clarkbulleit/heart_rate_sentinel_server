@@ -6,10 +6,9 @@ app = Flask(__name__)
 
 @app.route("/api/new_patient", methods=["POST"])
 def new_patient():
+
     r = request.get_json()
-
     p = Patient(r['patient_id'], attending_email=r['attending_email'], user_age=r['user_age'])
-
     p.save()
 
     result = {
