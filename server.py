@@ -8,6 +8,7 @@ app = Flask(__name__)
 @app.route("/api/new_patient", methods=["POST"])
 def new_patient():
     r = request.get_json()
+
     try:
         validate_inputs(r)
     except KeyError:
@@ -19,6 +20,7 @@ def new_patient():
     result = {
         "message": "Added user {0} successfully to the class list".format(request.json["patient_id"])
     }
+
     return jsonify(result)
 
 
