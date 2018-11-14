@@ -8,7 +8,7 @@ app = Flask(__name__)
 def new_patient():
     r = request.get_json()
 
-    p = Patient(patient_id=r['patient_id'], attending_email=r['attending_email'], user_age=r['user_age'])
+    p = Patient(r['patient_id'], attending_email=r['attending_email'], user_age=r['user_age'])
 
     p.save()
 
