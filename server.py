@@ -1,13 +1,18 @@
 from flask import Flask, jsonify, request
 from patients import Patient
 from pymodm import connect
+from validate_inputs import validate_inputs, PatientKeyError
 app = Flask(__name__)
 
 
 @app.route("/api/new_patient", methods=["POST"])
 def new_patient():
-
     r = request.get_json()
+    try:
+        validate_inputs(r)
+    except PatientKeyError as inst:
+        return jsonify({"message": inst.message})
+
     p = Patient(r['patient_id'], attending_email=r['attending_email'], user_age=r['user_age'])
     p.save()
 
