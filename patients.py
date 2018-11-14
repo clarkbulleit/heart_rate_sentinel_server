@@ -1,7 +1,8 @@
 from pymodm import connect
 from pymodm import MongoModel, fields
 
-connect("mongodb://clarkbulleit:goduke112@ds037778.mlab.com:37778/patients_cb329")
+connect("mongodb://clarkbulleit:goduke112@ds037778."
+        "mlab.com:37778/patients_cb329")
 
 
 class Patient(MongoModel):

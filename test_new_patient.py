@@ -8,4 +8,3 @@ if __name__ == "__main__":
     }
 
     r = requests.post("http://127.0.0.1:5002/api/new_patient", json=patient)
-
