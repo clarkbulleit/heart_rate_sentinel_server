@@ -7,7 +7,7 @@ import pytest
     {" patient_id": 1, "attending_email": 1, "user_age": 1},
     {" patient_id": 1, "attending_email": 1, "user_age": 1, "ds": 1},
     {" patient_id": 1, "attending_email": 1, "user_age": 1, "patient_id": 1},
-
+    {" patient_id": 1, "attending_email": 1, "patient_id": 1},
 ])
 def test_validate_inputs(a):
     from validate_inputs import validate_inputs
