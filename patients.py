@@ -11,8 +11,3 @@ class Patient(MongoModel):
     user_age = fields.IntegerField()
     heart_rate = fields.ListField()
     time = fields.DateTimeField()
-
-
-# if __name__ == "__main__":
-    # patient = Patient.objects.raw({"_id": 1}).first()
-    # print(patient.user_age)
