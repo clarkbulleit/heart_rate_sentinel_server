@@ -37,7 +37,9 @@ def post_heart_rate():
         return jsonify({"message": 'Required Keys not Present'}), 500
 
     timestamp = str(datetime.datetime.now())
+
     p = Patient.objects.raw({"_id": r["patient_id"]}).first()
+
     p.heart_rate.append(r['heart_rate'])
     p.time.append(timestamp)
     p.save()
