@@ -70,7 +70,9 @@ def status(patient_id):
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
 def get_heart_rate(patient_id):
-    return
+    p = Patient.objects.raw({"_id": int(patient_id)}).first()
+    hr = p.heart_rate
+    return jsonify(hr)
 
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
