@@ -59,10 +59,11 @@ def status(patient_id):
     age = p.user_age
     timestamp = p.time[-1]
 
-    # tachy = is_tachycardic(hr, age)
+    tachy = is_tachycardic(hr, age)
 
     result = {
-        "message": "Your hr is, {}".format(hr)
+        "is_tachycardic": tachy,
+        "time": timestamp,
     }
     return jsonify(result)
 
