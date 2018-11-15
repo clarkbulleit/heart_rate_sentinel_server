@@ -29,7 +29,7 @@ def new_patient():
 @app.route("/api/heart_rate", methods=["POST"])
 def post_heart_rate():
     r = request.get_json()
-    timestamp = datetime.datetime.now()
+    timestamp = str(datetime.datetime.now())
 
     p = Patient.objects.raw({"_id": r["patient_id"]}).first()
     p.heart_rate.append(r['heart_rate'])
