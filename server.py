@@ -3,6 +3,7 @@ from patients import Patient
 from pymodm import connect
 from validate_inputs import validate_inputs
 from validate_HR_inputs import validate_hr_inputs
+from is_tachycardic import is_tachycardic
 import datetime
 app = Flask(__name__)
 
@@ -53,7 +54,18 @@ def post_heart_rate():
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
 def status(patient_id):
-    return
+    p = Patient.objects.raw({"_id": int(patient_id)}).first()
+    hr = p.heart_rate[-1]
+    age = p.user_age
+    timestamp = p.time[-1]
+
+    tachy = is_tachycardic(hr, age)
+
+    result = {
+        "is_tachycardic": tachy,
+        "time": timestamp,
+    }
+    return jsonify(result)
 
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
