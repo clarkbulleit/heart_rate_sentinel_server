@@ -119,9 +119,11 @@ def average_heart_rate(patient_id):
     except ZeroDivisionError:
         return jsonify({"message": "heart rate list is empty"})
     except TypeError:
-        return jsonify({"message": "heart rate list contains non numeric inputs"})
+        return jsonify({"message": "heart rate list "
+                                   "contains non numeric inputs"})
 
-    return jsonify({"message": "The patients average heart rate is {}".format(avg)})
+    return jsonify({"message": "The patients average "
+                               "heart rate is {}".format(avg)})
 
 
 @app.route("/api/heart_rate/interval_average", methods=["GET"])
