@@ -1,5 +1,6 @@
 
 
-def calc_avg_hr(hr):
+def calc_avg_hr(hr, date):
 
-    return sum(hr)/len(hr)
+    if date == 1:
+        return sum(hr)/len(hr)
