@@ -6,5 +6,5 @@ def validate_hr_inputs(r):
     ]
 
     for key in hr_keys:
-        if key not in r.keys() or len(r.keys()) != 3:
+        if key not in r.keys() or len(r.keys()) != 2:
             raise KeyError
