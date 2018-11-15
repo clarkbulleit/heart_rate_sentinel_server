@@ -6,6 +6,7 @@ from validate_HR_inputs import validate_hr_inputs
 from is_tachycardic import is_tachycardic
 import datetime
 from first_sendgrid_email import send_email
+from calc_avg_hr import calc_avg_hr
 app = Flask(__name__)
 
 
@@ -99,7 +100,30 @@ def get_heart_rate(patient_id):
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
 def average_heart_rate(patient_id):
-    return
+
+    try:
+        id = int(patient_id)
+    except ValueError:
+        return jsonify({"message": "Please enter an integer"
+                        }), 500
+
+    try:
+        p = Patient.objects.raw({"_id": id}).first()
+        hr = p.heart_rate
+    except Patient.DoesNotExist:
+        return jsonify({"message": "Patient does not exist, "
+                                   "please enter new patient id"
+                        }), 500
+    try:
+        avg = calc_avg_hr(hr, 1)
+    except ZeroDivisionError:
+        return jsonify({"message": "heart rate list is empty"})
+    except TypeError:
+        return jsonify({"message": "heart rate list "
+                                   "contains non numeric inputs"})
+
+    return jsonify({"message": "The patients average "
+                               "heart rate is {}".format(avg)})
 
 
 @app.route("/api/heart_rate/interval_average", methods=["GET"])
