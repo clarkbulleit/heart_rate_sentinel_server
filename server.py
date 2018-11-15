@@ -5,6 +5,7 @@ from validate_inputs import validate_inputs
 from validate_HR_inputs import validate_hr_inputs
 from is_tachycardic import is_tachycardic
 import datetime
+from first_sendgrid_email import send_email
 app = Flask(__name__)
 
 
@@ -65,6 +66,10 @@ def status(patient_id):
         "is_tachycardic": tachy,
         "time": timestamp,
     }
+
+    if tachy:
+        send_email(patient_id, timestamp)
+
     return jsonify(result)
 
 
