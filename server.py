@@ -70,7 +70,26 @@ def status(patient_id):
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
 def get_heart_rate(patient_id):
-    return
+
+    try:
+        id = int(patient_id)
+    except ValueError:
+        return jsonify({"message": "Please enter an integer"
+                        }), 500
+
+    try:
+        p = Patient.objects.raw({"_id": id}).first()
+        hr = p.heart_rate
+    except Patient.DoesNotExist:
+        return jsonify({"message": "Patient does not exist, "
+                                   "please enter new patient id"
+                        }), 500
+
+    if not hr:
+        return jsonify({"message": "Patient does "
+                                   "not have any saved heart rates"})
+    else:
+        return jsonify(hr)
 
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
