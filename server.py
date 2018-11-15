@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request
 from patients import Patient
 from pymodm import connect
 from validate_inputs import validate_inputs
+from validate_HR_inputs import validate_hr_inputs
+import datetime
 app = Flask(__name__)
 
 
@@ -19,7 +21,7 @@ def new_patient():
     p.save()
     result = {
         "message": "Added user {0} successfully "
-                   "to the class list".format(request.json["patient_id"])
+                   "to the patient database".format(request.json["patient_id"])
     }
 
     return jsonify(result)
@@ -27,7 +29,26 @@ def new_patient():
 
 @app.route("/api/heart_rate", methods=["POST"])
 def post_heart_rate():
-    return
+    r = request.get_json()
+
+    try:
+        validate_hr_inputs(r)
+    except KeyError:
+        return jsonify({"message": 'Required Keys not Present'}), 500
+
+    timestamp = str(datetime.datetime.now())
+
+    p = Patient.objects.raw({"_id": r["patient_id"]}).first()
+
+    p.heart_rate.append(r['heart_rate'])
+    p.time.append(timestamp)
+    p.save()
+
+    result = {
+        "message": "Added heart rate data for user {0} successfully "
+                   "to the patient database".format(request.json["patient_id"])
+    }
+    return jsonify(result)
 
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
