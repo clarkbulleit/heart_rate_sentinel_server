@@ -31,11 +31,10 @@ def post_heart_rate():
     r = request.get_json()
     timestamp = datetime.datetime.now()
 
-    Patient.update(
-        {'_id': r['patient_id']},
-        {'$push': {'heart_rate': r['heart_rate']}},
-        {'$push': {'time': timestamp}}
-                   )
+    p = Patient.objects.raw({"_id": r["patient_id"]}).first()
+    p.heart_rate.append(r['heart_rate'])
+    p.time.append(timestamp)
+    p.save()
 
     result = {
         "message": "Added heart rate data for user {0} successfully "
