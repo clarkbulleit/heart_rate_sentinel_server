@@ -90,12 +90,8 @@ def status(patient_id):
     tachy = p.is_tachycardic
     timestamp = p.time[-1]
 
-    result = {
-        "is_tachycardic": tachy,
-        "time": timestamp,
-    }
-
-    return jsonify(result)
+    return jsonify({"Patient {} is tachycardic".format(patient_id): tachy,
+                    "Time": timestamp})
 
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
@@ -127,8 +123,8 @@ def average_heart_rate(patient_id):
     except TypeError:
         return jsonify(error_messages[3]), 500
 
-    return jsonify({"message": "The patients average "
-                               "heart rate is {}".format(avg)})
+    return jsonify({"message": "Patient {}'s average "
+                               "heart rate is {} bpm".format(patient_id, avg)})
 
 
 @app.route("/api/heart_rate/interval_average", methods=["POST"])
@@ -151,7 +147,11 @@ def int_average_hr():
     times = p.time
 
     avg_hr_since = calc_avg_hr(hr, times, date)
-    return jsonify(avg_hr_since)
+
+    return jsonify({"message": "The patients average "
+                               "heart rate since {} "
+                               "is {} bpm".format(r['heart_rate_average_since']
+                                                  , avg_hr_since)})
 
 
 if __name__ == "__main__":
