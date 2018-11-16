@@ -14,7 +14,8 @@ error_messages = {
         1: {"message": "Patient does not exist, please enter new patient id"},
         2: {"message": "Patient does not have any saved heart rates"},
         3: {"message": "heart rate list contains non numeric inputs"},
-        4: {"message": 'Required Keys not Present'}
+        4: {"message": 'Required Keys not Present'},
+        5: {"message": 'Cannot overwrite current patient information'},
             }
 
 
@@ -27,8 +28,14 @@ def new_patient():
     except KeyError:
         return jsonify(error_messages[4]), 500
 
-    p = Patient(r['patient_id'], attending_email=r['attending_email'],
+    try:
+        p = Patient.objects.raw({"_id": r['patient_id']}).first()
+    except Patient.DoesNotExist:
+        p = Patient(r['patient_id'], attending_email=r['attending_email'],
                 user_age=r['user_age'])
+    else:
+        return jsonify(error_messages[5]), 500
+
     p.save()
     result = {
         "message": "Added user {0} successfully "
@@ -49,7 +56,10 @@ def post_heart_rate():
 
     timestamp = str(datetime.datetime.now())
 
-    p = Patient.objects.raw({"_id": r["patient_id"]}).first()
+    try:
+        p = Patient.objects.raw({"_id": r["patient_id"]}).first()
+    except Patient.DoesNotExist:
+        return jsonify(error_messages[1]), 500
 
     p.heart_rate.append(r['heart_rate'])
     p.time.append(timestamp)
@@ -69,7 +79,7 @@ def status(patient_id):
     if out == 3:
         p = Patient.objects.raw({"_id": int(patient_id)}).first()
     else:
-        return jsonify(error_messages[out])
+        return jsonify(error_messages[out]), 500
 
     hr = p.heart_rate[-1]
     age = p.user_age
@@ -82,8 +92,8 @@ def status(patient_id):
         "time": timestamp,
     }
 
-    # if tachy:
-    # send_email(patient_id, timestamp)
+    if tachy:
+        send_email(patient_id, timestamp)
 
     return jsonify(result)
 
@@ -97,7 +107,7 @@ def get_heart_rate(patient_id):
         p = Patient.objects.raw({"_id": int(patient_id)}).first()
         return jsonify(p.heart_rate)
     else:
-        return jsonify(error_messages[out])
+        return jsonify(error_messages[out]), 500
 
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
@@ -108,14 +118,14 @@ def average_heart_rate(patient_id):
         p = Patient.objects.raw({"_id": int(patient_id)}).first()
         hr = p.heart_rate
     else:
-        return jsonify(error_messages[out])
+        return jsonify(error_messages[out]), 500
 
     try:
         avg = calc_avg_hr(hr, 1)
     except ZeroDivisionError:
-        return jsonify(error_messages[2])
+        return jsonify(error_messages[2]), 500
     except TypeError:
-        return jsonify(error_messages[3])
+        return jsonify(error_messages[3]), 500
 
     return jsonify({"message": "The patients average "
                                "heart rate is {}".format(avg)})
