@@ -16,6 +16,7 @@ error_messages = {
         3: {"message": "heart rate list contains non numeric inputs"},
         4: {"message": 'Required Keys not Present'},
         5: {"message": 'Cannot overwrite current patient information'},
+        6: {"message": 'No heart rates exist after this time'}
             }
 
 
@@ -146,7 +147,14 @@ def int_average_hr():
     hr = p.heart_rate
     times = p.time
 
-    avg_hr_since = calc_avg_hr(hr, times, date)
+    try:
+        avg_hr_since = calc_avg_hr(hr, times, date)
+    except ZeroDivisionError:
+        return jsonify(error_messages[2]), 500
+    except TypeError:
+        return jsonify(error_messages[3]), 500
+    except UnboundLocalError:
+        return jsonify(error_messages[6]), 500
 
     return jsonify({"message": "The patients average "
                                "heart rate since {} "
