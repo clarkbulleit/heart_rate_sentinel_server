@@ -15,6 +15,7 @@ from pymodm import connect
 def test_validate_get_request(a, expected):
     connect("mongodb://clarkbulleit:goduke112@ds037778.mlab.com:"
             "37778/patients_cb329")
+
     if a == 50:
         p = Patient(a, attending_email='clark@gmail.com',
                     user_age=50, heart_rate=[1])

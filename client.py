@@ -56,7 +56,7 @@ def client_post_interval(id, cutoff_time):
 
 
 if __name__ == "__main__":
-
+    # run new patient
     id = 11
     age = 25
     hr = 150
