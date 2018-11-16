@@ -32,7 +32,7 @@ def new_patient():
         p = Patient.objects.raw({"_id": r['patient_id']}).first()
     except Patient.DoesNotExist:
         p = Patient(r['patient_id'], attending_email=r['attending_email'],
-                user_age=r['user_age'])
+                    user_age=r['user_age'])
     else:
         return jsonify(error_messages[5]), 500
 
