@@ -3,7 +3,9 @@ from patients import Patient
 
 def validate_get_request(patient_id):
 
-    if type(patient_id) != int:
+    try:
+        int(patient_id)
+    except ValueError:
         return 0
 
     try:
