@@ -1,15 +1,16 @@
 import requests
+import random
 
-url = 'http://vcm-7335.vm.duke.edu:5002/'
-# url = 'http://127.0.0.1:5002/'
+# url = 'http://vcm-7335.vm.duke.edu:5002/'
+url = 'http://127.0.0.1:5002/'
 
 
 def client_add_new_patient(id, email, age):
     patient = {
 
-        "patient_id": int(id),
-        "attending_email": str(email),
-        "user_age": int(age),
+        "patient_id": id,
+        "attending_email": email,
+        "user_age": age,
     }
     r = requests.post(url + 'api/new_patient',
                       json=patient)
@@ -56,14 +57,19 @@ def client_post_interval(id, cutoff_time):
 
 
 if __name__ == "__main__":
-    # run new patient
-    id = 11
-    age = 25
-    hr = 150
-    cutoff_time = "2018-03-09 11:00:36.372339"
 
-    r1 = client_add_new_patient(id, 'clarkbulleit@gmail.com', age)
-    print(r1.json())
+    route_type = 1
+
+    # tests add_new_patient route by
+    # attempting to add id numbers from
+    if route_type == 1:
+        id = list(range(1, 11))
+        email = 'clarkbulleit@gmail.com'
+
+        for x in range(10):
+            r = random.randint(1, 101)
+            r1 = client_add_new_patient(id[x], email, r)
+            print(r1.json())
 
     r2 = client_add_patient_hr(id, hr)
     print(r2.json())
