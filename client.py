@@ -62,10 +62,13 @@ if __name__ == "__main__":
     connect("mongodb://clarkbulleit:goduke112@ds037778.mlab.com:"
             "37778/patients_cb329")
 
-    route_type = 4
-    # 1: Functions of add_patient POST route
-    # 2: Functions of heart_rate POST route
-    # 3: Functions of
+    route_type = 3
+    # 1: Functions of api/add_patient POST route
+    # 2: Functions of api/heart_rate POST route
+    # 3: Functions of api/status GET route
+    # 4: Functions of api/heart_rate GET route
+    # 5: Functions of api/heart_rate/average GET route
+    # 6: Functions of api/heart_rate/interval_average Post route
     num_patients = 5
     id = list(range(1, num_patients+1))
 
@@ -119,13 +122,21 @@ if __name__ == "__main__":
             status1 = client_get_status(x)
             print(status1.json())
 
+    # tests the GET patient heart rate data function
     if route_type == 4:
         for x in id:
             hr_list = client_get_hr_data(x)
             print(hr_list.json())
 
-    # r5 = client_get_hr_avg(id)
-    # print(r5.json())
+    # tests the GET patient total average heart rate function
+    if route_type == 5:
+        for x in id:
+            avg = client_get_hr_avg(x)
+            print(avg.json())
 
-    # r6 = client_post_interval(id, cutoff_time)
-    # print(r6.json())
+    if route_type == 6:
+        cutoff_time = "2018-11-15 17:28:01.657308"
+
+        for x in id:
+            r6 = client_post_interval(x, cutoff_time)
+            print(r6.json())
