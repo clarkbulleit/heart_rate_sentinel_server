@@ -10,7 +10,6 @@ from pymodm import connect
     (52, 1),
     ('a', 0),
     (' ', 0),
-    (1.75, 0)
 ])
 def test_validate_get_request(a, expected):
     connect("mongodb://clarkbulleit:goduke112@ds037778.mlab.com:"
