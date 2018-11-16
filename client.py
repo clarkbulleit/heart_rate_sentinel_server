@@ -62,7 +62,7 @@ if __name__ == "__main__":
     connect("mongodb://clarkbulleit:goduke112@ds037778.mlab.com:"
             "37778/patients_cb329")
 
-    route_type = 3
+    route_type = 4
     # 1: Functions of add_patient POST route
     # 2: Functions of heart_rate POST route
     # 3: Functions of
@@ -119,8 +119,10 @@ if __name__ == "__main__":
             status1 = client_get_status(x)
             print(status1.json())
 
-    # r4 = client_get_hr_data(id)
-    # print(r4.json())
+    if route_type == 4:
+        for x in id:
+            hr_list = client_get_hr_data(x)
+            print(hr_list.json())
 
     # r5 = client_get_hr_avg(id)
     # print(r5.json())
