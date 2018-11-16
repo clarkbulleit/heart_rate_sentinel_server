@@ -1,8 +1,7 @@
 from flask import Flask, jsonify, request
 from patients import Patient
 from pymodm import connect
-from validate_inputs import validate_inputs
-from validate_HR_inputs import validate_hr_inputs
+from validate_post_inputs import validate_post_inputs
 from is_tachycardic import is_tachycardic
 import datetime
 from first_sendgrid_email import send_email
@@ -14,7 +13,8 @@ error_messages = {
         0: {"message": "Please enter an integer"},
         1: {"message": "Patient does not exist, please enter new patient id"},
         2: {"message": "Patient does not have any saved heart rates"},
-        3: {"message": "heart rate list contains non numeric inputs"}
+        3: {"message": "heart rate list contains non numeric inputs"},
+        4: {"message": 'Required Keys not Present'}
             }
 
 
@@ -23,9 +23,9 @@ def new_patient():
     r = request.get_json()
 
     try:
-        validate_inputs(r)
+        validate_post_inputs(r, 1)
     except KeyError:
-        return jsonify({"message": 'Required Keys not Present'}), 500
+        return jsonify(error_messages[4]), 500
 
     p = Patient(r['patient_id'], attending_email=r['attending_email'],
                 user_age=r['user_age'])
@@ -43,9 +43,9 @@ def post_heart_rate():
     r = request.get_json()
 
     try:
-        validate_hr_inputs(r)
+        validate_post_inputs(r, 2)
     except KeyError:
-        return jsonify({"message": 'Required Keys not Present'}), 500
+        return jsonify(error_messages[4]), 500
 
     timestamp = str(datetime.datetime.now())
 
@@ -83,7 +83,7 @@ def status(patient_id):
     }
 
     # if tachy:
-        # send_email(patient_id, timestamp)
+    # send_email(patient_id, timestamp)
 
     return jsonify(result)
 

@@ -2,7 +2,7 @@ import requests
 
 if __name__ == "__main__":
     patient = {
-        "patient_id": 3,
+        "patient_id": 7,
         # "attending_email": 'clarkbulleit@gmail.com',
         # "user_age": 60,
         "heart_rate": 105,
