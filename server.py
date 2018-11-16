@@ -156,8 +156,9 @@ def int_average_hr():
 
     return jsonify({"message": "The patients average "
                                "heart rate since {} "
-                               "is {} bpm".format(r['heart_rate_average_since']
-                                                  , avg_hr_since)})
+                               "is {} bpm".format(
+                                r['heart_rate_average_since'],
+                                avg_hr_since)})
 
 
 if __name__ == "__main__":
