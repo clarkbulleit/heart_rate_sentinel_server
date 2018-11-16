@@ -63,7 +63,13 @@ def post_heart_rate():
 
     p.heart_rate.append(r['heart_rate'])
     p.time.append(timestamp)
+
+    tachy = is_tachycardic(r['heart_rate'], p.user_age)
+    p.is_tachycardic = tachy
     p.save()
+
+    if tachy:
+        send_email(r['patient_id'], timestamp)
 
     result = {
         "message": "Added heart rate data for user {0} successfully "
@@ -81,19 +87,13 @@ def status(patient_id):
     else:
         return jsonify(error_messages[out]), 500
 
-    hr = p.heart_rate[-1]
-    age = p.user_age
+    tachy = p.is_tachycardic
     timestamp = p.time[-1]
-
-    tachy = is_tachycardic(hr, age)
 
     result = {
         "is_tachycardic": tachy,
         "time": timestamp,
     }
-
-    if tachy:
-        send_email(patient_id, timestamp)
 
     return jsonify(result)
 

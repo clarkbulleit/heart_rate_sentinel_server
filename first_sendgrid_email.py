@@ -5,7 +5,10 @@ from sendgrid.helpers.mail import *
 
 
 def send_email(patient_id, timestamp):
-    sg = sendgrid.SendGridAPIClient(apikey='Sendgrid_API_Key')
+    sg = sendgrid.SendGridAPIClient(apikey='SG.lpj1iTqMRtmDXd5GC'
+                                           'xoiHQ.rXDJvAce_fNivEw'
+                                           'ZMKC53uIE9Quq-ocTHAX9w'
+                                           'gUAwzg')
     from_email = Email("clark.bulleit@duke.edu")
     to_email = Email("clarkbulleit@gmail.com")
     subject = "Patient {} is tachycardic".format(patient_id)

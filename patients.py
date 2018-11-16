@@ -11,3 +11,4 @@ class Patient(MongoModel):
     user_age = fields.IntegerField()
     heart_rate = fields.ListField()
     time = fields.ListField()
+    is_tachycardic = fields.BooleanField()
