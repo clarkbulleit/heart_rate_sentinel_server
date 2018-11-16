@@ -57,9 +57,9 @@ def client_post_interval(id, cutoff_time):
 
 if __name__ == "__main__":
 
-    id = 9
+    id = 11
     age = 25
-    hr = 70
+    hr = 150
     cutoff_time = "2018-03-09 11:00:36.372339"
 
     r1 = client_add_new_patient(id, 'clarkbulleit@gmail.com', age)
