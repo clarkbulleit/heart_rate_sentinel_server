@@ -1,13 +1,21 @@
 from flask import Flask, jsonify, request
 from patients import Patient
 from pymodm import connect
-from validate_inputs import validate_inputs
-from validate_HR_inputs import validate_hr_inputs
+from validate_post_inputs import validate_post_inputs
 from is_tachycardic import is_tachycardic
 import datetime
 from first_sendgrid_email import send_email
 from calc_avg_hr import calc_avg_hr
+from validate_GET_request import validate_get_request
 app = Flask(__name__)
+
+error_messages = {
+        0: {"message": "Please enter an integer"},
+        1: {"message": "Patient does not exist, please enter new patient id"},
+        2: {"message": "Patient does not have any saved heart rates"},
+        3: {"message": "heart rate list contains non numeric inputs"},
+        4: {"message": 'Required Keys not Present'}
+            }
 
 
 @app.route("/api/new_patient", methods=["POST"])
@@ -15,9 +23,9 @@ def new_patient():
     r = request.get_json()
 
     try:
-        validate_inputs(r)
+        validate_post_inputs(r, 1)
     except KeyError:
-        return jsonify({"message": 'Required Keys not Present'}), 500
+        return jsonify(error_messages[4]), 500
 
     p = Patient(r['patient_id'], attending_email=r['attending_email'],
                 user_age=r['user_age'])
@@ -35,9 +43,9 @@ def post_heart_rate():
     r = request.get_json()
 
     try:
-        validate_hr_inputs(r)
+        validate_post_inputs(r, 2)
     except KeyError:
-        return jsonify({"message": 'Required Keys not Present'}), 500
+        return jsonify(error_messages[4]), 500
 
     timestamp = str(datetime.datetime.now())
 
@@ -56,7 +64,13 @@ def post_heart_rate():
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
 def status(patient_id):
-    p = Patient.objects.raw({"_id": int(patient_id)}).first()
+    out = validate_get_request(patient_id)
+
+    if out == 3:
+        p = Patient.objects.raw({"_id": int(patient_id)}).first()
+    else:
+        return jsonify(error_messages[out])
+
     hr = p.heart_rate[-1]
     age = p.user_age
     timestamp = p.time[-1]
@@ -68,8 +82,8 @@ def status(patient_id):
         "time": timestamp,
     }
 
-    if tachy:
-        send_email(patient_id, timestamp)
+    # if tachy:
+    # send_email(patient_id, timestamp)
 
     return jsonify(result)
 
@@ -77,50 +91,31 @@ def status(patient_id):
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
 def get_heart_rate(patient_id):
 
-    try:
-        id = int(patient_id)
-    except ValueError:
-        return jsonify({"message": "Please enter an integer"
-                        }), 500
+    out = validate_get_request(patient_id)
 
-    try:
-        p = Patient.objects.raw({"_id": id}).first()
-        hr = p.heart_rate
-    except Patient.DoesNotExist:
-        return jsonify({"message": "Patient does not exist, "
-                                   "please enter new patient id"
-                        }), 500
-
-    if not hr:
-        return jsonify({"message": "Patient does "
-                                   "not have any saved heart rates"})
+    if out == 3:
+        p = Patient.objects.raw({"_id": int(patient_id)}).first()
+        return jsonify(p.heart_rate)
     else:
-        return jsonify(hr)
+        return jsonify(error_messages[out])
 
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
 def average_heart_rate(patient_id):
+    out = validate_get_request(patient_id)
 
-    try:
-        id = int(patient_id)
-    except ValueError:
-        return jsonify({"message": "Please enter an integer"
-                        }), 500
-
-    try:
-        p = Patient.objects.raw({"_id": id}).first()
+    if out == 3:
+        p = Patient.objects.raw({"_id": int(patient_id)}).first()
         hr = p.heart_rate
-    except Patient.DoesNotExist:
-        return jsonify({"message": "Patient does not exist, "
-                                   "please enter new patient id"
-                        }), 500
+    else:
+        return jsonify(error_messages[out])
+
     try:
         avg = calc_avg_hr(hr, 1)
     except ZeroDivisionError:
-        return jsonify({"message": "heart rate list is empty"})
+        return jsonify(error_messages[2])
     except TypeError:
-        return jsonify({"message": "heart rate list "
-                                   "contains non numeric inputs"})
+        return jsonify(error_messages[3])
 
     return jsonify({"message": "The patients average "
                                "heart rate is {}".format(avg)})
