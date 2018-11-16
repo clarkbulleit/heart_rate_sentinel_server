@@ -16,4 +16,4 @@ def validate_get_request(patient_id):
     if not hr:
         return 2
     else:
-        return hr
+        return 3
