@@ -12,6 +12,7 @@ def client_add_new_patient(id, email, age):
                       json=patient)
     return r
 
+
 def client_add_patient_hr(id, hr):
     patient = {
         "patient_id": id,
@@ -41,7 +42,7 @@ def client_get_hr_avg(patient_id):
 
     return r
 
-  
+
 def client_post_interval(id, cutoff_time):
     patient = {
         "patient_id": id,
@@ -53,22 +54,28 @@ def client_post_interval(id, cutoff_time):
 
     return r
 
+
 if __name__ == "__main__":
-    r1 = client_add_new_patient(6, 'clarkbulleit@gmail.com', 30)
+
+    id = 9
+    age = 25
+    hr = 70
+    cutoff_time = "2018-03-09 11:00:36.372339"
+
+    r1 = client_add_new_patient(id, 'clarkbulleit@gmail.com', age)
     print(r1.json())
 
-    r2 = client_add_patient_hr(6, 170)
+    r2 = client_add_patient_hr(id, hr)
     print(r2.json())
 
-    r3 = client_get_status(6)
+    r3 = client_get_status(id)
     print(r3.json())
 
-    r4 = client_get_hr_data(6)
+    r4 = client_get_hr_data(id)
     print(r4.json())
 
-    r5 = client_get_hr_avg(6)
+    r5 = client_get_hr_avg(id)
     print(r5.json())
 
-    cutoff_time = "2018-03-09 11:00:36.372339"
-    r6 = client_post_interval(6, cutoff_time)
+    r6 = client_post_interval(id, cutoff_time)
     print(r6.json())
