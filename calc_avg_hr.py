@@ -11,5 +11,9 @@ def calc_avg_hr(hr, times, cutoff_time):
                     > cutoff_time:
                 i = times.index(x)
                 hr_since.append(hr[i])
-        avg = sum(hr_since)/len(hr_since)
+
+        if len(hr_since) == 0:
+            raise UnboundLocalError
+        else:
+            avg = sum(hr_since)/len(hr_since)
     return avg
