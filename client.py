@@ -62,7 +62,7 @@ if __name__ == "__main__":
     connect("mongodb://clarkbulleit:goduke112@ds037778.mlab.com:"
             "37778/patients_cb329")
 
-    route_type = 2
+    route_type = 3
     # 1: Functions of add_patient POST route
     # 2: Functions of heart_rate POST route
     # 3: Functions of
@@ -110,8 +110,14 @@ if __name__ == "__main__":
     # Tests the GET patient status route
     if route_type == 3:
         for x in id:
-            r3 = client_get_status(x)
-            print(r3.json())
+            status = client_get_status(x)
+            print(status.json())
+
+        # Shows that pulling from non-existent patients is
+        # handled well
+        for x in range(num_patients+1, num_patients+6):
+            status1 = client_get_status(x)
+            print(status1.json())
 
     # r4 = client_get_hr_data(id)
     # print(r4.json())
