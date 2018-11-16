@@ -121,7 +121,7 @@ def average_heart_rate(patient_id):
         return jsonify(error_messages[out]), 500
 
     try:
-        avg = calc_avg_hr(hr, 1)
+        avg = calc_avg_hr(hr, 1, 1)
     except ZeroDivisionError:
         return jsonify(error_messages[2]), 500
     except TypeError:
@@ -131,9 +131,27 @@ def average_heart_rate(patient_id):
                                "heart rate is {}".format(avg)})
 
 
-@app.route("/api/heart_rate/interval_average", methods=["GET"])
-def int_average_hr(patient_id):
-    return
+@app.route("/api/heart_rate/interval_average", methods=["POST"])
+def int_average_hr():
+    r = request.get_json()
+
+    try:
+        validate_post_inputs(r, 3)
+    except KeyError:
+        return jsonify(error_messages[4]), 500
+
+    date = datetime.datetime.strptime(r["heart_rate_average_since"],
+                                      '%Y-%m-%d %H:%M:%S.%f')
+
+    try:
+        p = Patient.objects.raw({"_id": r["patient_id"]}).first()
+    except Patient.DoesNotExist:
+        return jsonify(error_messages[1]), 500
+    hr = p.heart_rate
+    times = p.time
+
+    avg_hr_since = calc_avg_hr(hr, times, date)
+    return jsonify(avg_hr_since)
 
 
 if __name__ == "__main__":

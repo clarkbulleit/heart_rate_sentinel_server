@@ -14,6 +14,9 @@ import pytest
       "heart_rate": 1}, 2),
     ({"patient_id": 1, "patient_id": 1}, 2),
     ({"patient_id": 1}, 2),
+    ({"patient_id": 1, "patient_id": 1}, 3),
+    ({"patient_id": 1, "heart_rate": 1}, 3),
+    ({"patient_id": 1, "heart_rate_average_since": 1, "heart_rate": 1}, 3),
 ])
 def test_validate_post_inputs(a, route):
     from validate_post_inputs import validate_post_inputs
