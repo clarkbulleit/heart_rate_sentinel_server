@@ -3,6 +3,7 @@ import requests
 
 def client_add_new_patient(id, email, age):
     patient = {
+
         "patient_id": int(id),
         "attending_email": str(email),
         "user_age": int(age),
@@ -10,7 +11,6 @@ def client_add_new_patient(id, email, age):
     r = requests.post("http://127.0.0.1:5002/api/new_patient",
                       json=patient)
     return r
-
 
 def client_add_patient_hr(id, hr):
     patient = {
@@ -41,7 +41,7 @@ def client_get_hr_avg(patient_id):
 
     return r
 
-
+  
 def client_post_interval(id, cutoff_time):
     patient = {
         "patient_id": id,
