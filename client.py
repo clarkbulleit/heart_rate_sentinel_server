@@ -141,8 +141,8 @@ if __name__ == "__main__":
         print(avg1.json())
 
     if route_type == 6:
-        # cutoff_time = "2018-11-15 17:28:01.657308"
-        cutoff_time = str(datetime.datetime.now())
+        cutoff_time = "2018-11-15 17:28:01.657308"
+        # cutoff_time = str(datetime.datetime.now())
 
         for x in id:
             r6 = client_post_interval(x, cutoff_time)

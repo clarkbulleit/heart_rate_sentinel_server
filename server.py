@@ -137,15 +137,13 @@ def int_average_hr():
     except KeyError:
         return jsonify(error_messages[4]), 500
 
-    date = datetime.datetime.strptime(r["heart_rate_average_since"],
-                                      '%Y-%m-%d %H:%M:%S.%f')
-
     try:
         p = Patient.objects.raw({"_id": r["patient_id"]}).first()
     except Patient.DoesNotExist:
         return jsonify(error_messages[1]), 500
     hr = p.heart_rate
     times = p.time
+    date = r["heart_rate_average_since"]
 
     try:
         avg_hr_since = calc_avg_hr(hr, times, date)
