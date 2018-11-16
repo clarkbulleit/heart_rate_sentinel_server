@@ -25,7 +25,6 @@ def client_add_patient_hr(id, hr):
 def client_get_status(patient_id):
     url = 'http://127.0.0.1:5002/api/status/{}'.format(patient_id)
     r = requests.get(url)
-
     return r
 
 
