@@ -2,6 +2,7 @@ import requests
 import random
 from patients import Patient
 from pymodm import connect
+import datetime
 
 # url = 'http://vcm-7335.vm.duke.edu:5002/'
 url = 'http://127.0.0.1:5002/'
@@ -62,7 +63,7 @@ if __name__ == "__main__":
     connect("mongodb://clarkbulleit:goduke112@ds037778.mlab.com:"
             "37778/patients_cb329")
 
-    route_type = 3
+    route_type = 6
     # 1: Functions of api/add_patient POST route
     # 2: Functions of api/heart_rate POST route
     # 3: Functions of api/status GET route
@@ -134,8 +135,14 @@ if __name__ == "__main__":
             avg = client_get_hr_avg(x)
             print(avg.json())
 
+        # Tests functionality for patients without hr data
+        client_add_new_patient(num_patients+1, 'clark@gmail.com', 1)
+        avg1 = client_get_hr_avg(num_patients+1)
+        print(avg1.json())
+
     if route_type == 6:
-        cutoff_time = "2018-11-15 17:28:01.657308"
+        # cutoff_time = "2018-11-15 17:28:01.657308"
+        cutoff_time = str(datetime.datetime.now())
 
         for x in id:
             r6 = client_post_interval(x, cutoff_time)
