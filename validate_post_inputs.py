@@ -11,6 +11,11 @@ def validate_post_inputs(r, route):
             "patient_id",
             "heart_rate",
             ]
+    elif route == 3:
+        patient_keys = [
+            "patient_id",
+            "heart_rate_average_since",
+        ]
 
     for key in patient_keys:
         if key not in r.keys() or len(r.keys()) != len(patient_keys):
