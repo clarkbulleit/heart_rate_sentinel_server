@@ -78,10 +78,16 @@ if __name__ == "__main__":
         email = 'clarkbulleit@gmail.com'
 
         for x in range(num_patients):
-            r = random.randint(1, 101)
-            r1 = client_add_new_patient(id[x], email, r)
-            print(r1.json())
+            rand = random.randint(1, 101)
+            add = client_add_new_patient(id[x], email, rand)
+            print(add.json())
 
+        # exhibits the feature that patient information cannot
+        # be overwritten
+        for x in range(num_patients):
+            rand1 = random.randint(1, 101)
+            add1 = client_add_new_patient(id[x], email, rand1)
+            print(add1.json())
     # tests the POST patient heart rate route by
     # posting random heart rates for the patients
     if route_type == 2:
