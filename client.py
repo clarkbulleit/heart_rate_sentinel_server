@@ -6,8 +6,8 @@ import datetime
 
 # Configured to hit virtual machine server
 # Change to other url if running on own machine
-url = 'http://vcm-7335.vm.duke.edu:5002/'
-# url = 'http://127.0.0.1:5002/'
+# url = 'http://vcm-7335.vm.duke.edu:5002/'
+url = 'http://127.0.0.1:5002/'
 
 
 def client_add_new_patient(id, email, age):

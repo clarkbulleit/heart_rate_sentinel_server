@@ -8,10 +8,12 @@ def validate_post_inputs(r, route):
     2: heart_rate POST route
     3: heart_rate/interval_average POST route
 
-    :param r: dictionary parsed from POST input
-    :param route: Route number key
-    :return: KeyError if keys are not valid for
-    the corresponding route
+    Args:
+        r (dict): dictionary parsed from POST input
+        route (int): Route number key
+
+    Returns:
+        Error: KeyError if keys are not valid for the corresponding route
     """
     if route == 1:
         patient_keys = [

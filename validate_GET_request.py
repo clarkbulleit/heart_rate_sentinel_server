@@ -11,8 +11,11 @@ def validate_get_request(patient_id):
     2: Heart rate list is empty
     3: Request is valid
 
-    :param patient_id: Integer
-    :return: Code 0-3
+    Args:
+        patient_id (int): patient id number
+
+    Returns:
+        int: code 0-3 corresponding to error messages
     """
 
     try:

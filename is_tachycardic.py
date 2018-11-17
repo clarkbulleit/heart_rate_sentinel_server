@@ -6,11 +6,12 @@ def is_tachycardic(hr, age):
     Function only works for patients older than 1 year
     old.
 
-    :param hr: Integer
-    :param age: Interger
+    Args:
+        hr (int): most current heart rate for patient
+        age (int): patient age
 
-    :return: True if patient is tachycardic, false
-    if not
+    Returns:
+        bool: true if patient is tachycardic, false if not
     """
     if hr > 186:
         tachy = True
