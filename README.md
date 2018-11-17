@@ -116,12 +116,9 @@
 
 
 ## Functions
-* readcsv.py
-* validate_data.py
-* peak_detect.py
-* time_duration.py
-* voltage_extremes.py
-* count_beats.py
-* calc_mean_hr.py
-* create_dict.py
-* write_JSON.py
+* calc_avg_hr.py
+* send_email.py
+* is_tachycardic.py
+* validate_get_request.py
+* validate_post_request.py
+
