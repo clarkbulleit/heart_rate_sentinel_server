@@ -140,10 +140,17 @@ if __name__ == "__main__":
         avg1 = client_get_hr_avg(num_patients+1)
         print(avg1.json())
 
+    # tests the POST patient interval average hr route
     if route_type == 6:
-        cutoff_time = "2018-11-15 17:28:01.657308"
-        # cutoff_time = str(datetime.datetime.now())
+        cutoff_time = "2018-11-17 08:50:53.059721"
+        time_now = str(datetime.datetime.now())
 
         for x in id:
             r6 = client_post_interval(x, cutoff_time)
             print(r6.json())
+
+        # tests what happens when there are no heart rates
+        # after the cutoff time
+        for x in id:
+            interval = client_post_interval(x, time_now)
+            print(interval.json())
