@@ -70,12 +70,12 @@ if __name__ == "__main__":
     # 4: Functions of api/heart_rate GET route
     # 5: Functions of api/heart_rate/average GET route
     # 6: Functions of api/heart_rate/interval_average Post route
+
     num_patients = 5
     id = list(range(1, num_patients+1))
 
     # tests add_new_patient route by deleting current directory and
     # adding the specified number of patients
-
     if route_type == 1:
         email = 'clarkbulleit@gmail.com'
 

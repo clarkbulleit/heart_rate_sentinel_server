@@ -69,8 +69,8 @@ def post_heart_rate():
     p.is_tachycardic = tachy
     p.save()
 
-    # if tachy:
-    # send_email(r['patient_id'], timestamp)
+    if tachy:
+        send_email(p.attending_email, r['patient_id'], timestamp)
 
     result = {
         "message": "Added heart rate data for user {0} successfully "
