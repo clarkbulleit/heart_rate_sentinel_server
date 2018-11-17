@@ -22,9 +22,17 @@
       "user_age": 50, # in years
   }
   ```
-  * If the keys are not correct, the server will return the following error message:
+  * If these three keys are not entered, the server will return the following error message:
   ```sh
   {"message": 'Required Keys not Present'}
+  ```
+  * If the patient id alread exists, the server will return the following error message:
+  ```sh
+  {'message': 'Cannot overwrite current patient information'}
+  ```
+  * If a patient is added correctly, the server will return the following message:
+  ```sh
+  {'message': 'Added user 1 successfully to the patient database'}
   ```
 * Warning: n Rows with non-numeric inputs were not imported
 * Info: test_data.csv was read and validated
