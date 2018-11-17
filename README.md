@@ -80,7 +80,24 @@
 ### `GET /api/heart_rate/<patient_id>`
   * Route returns the list of all patient heart rates in a list
 ### `GET /api/heart_rate/average/<patient_id>` 
-  * Route returns the total average of the patient id list
+  * Route returns the total average of the patient id list in the form:
+  ```sh
+  {'message': "Patient 1's average heart rate is 89.4 bpm"}
+  ```
+
+* All three GET requests that require the entry of <patient_id> will output the following error messages:
+  * If an integer is not entered into the GET request
+   ```sh
+  {"message": "Please enter an integer"},
+  ```
+  * If the patient does not exist:
+   ```sh
+  {"message": "Patient does not exist, please enter new patient id"},
+  ```
+  * If the heart rate list is empty:
+   ```sh
+  {"message": "Patient does not have any saved heart rates"}
+  ```
 ### `POST /api/heart_rate/interval_average` 
   * Route returns the average heart rate since the cutoff time that is entered into the post request. It expects the following input:
   ```
@@ -88,6 +105,10 @@
       "patient_id": "1",
       "heart_rate_average_since": "2018-03-09 11:00:36.372339" // date string
   }
+  ```
+  * If the interval average is calculated correctly, it will output the following message:
+  ```
+  {'message': 'The patients average heart rate since 2018-11-17 08:50:53.059721 is 137.6 bpm'}
   ```
   
 
