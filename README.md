@@ -34,7 +34,7 @@
   ```sh
   {'message': 'Added patient 1 successfully to the patient database'}
   ```
-* `POST /api/heart_rate`
+### `POST /api/heart_rate`
   * Route adds patient heart rate data to the database. It expects the following input:
   ```sh
   {
@@ -71,17 +71,17 @@
   }
   ```
   
-* `GET /api/status/<patient_id>`
+### `GET /api/status/<patient_id>`
   * Route returns the current status of the patient and the time based on the most recent heart rate. The server will return the following message:
    ```sh
   {'Patient 1 is tachycardic': False, 'Time': '2018-11-17 13:06:05.418068'}
   ```
 
-* `GET /api/heart_rate/<patient_id>`
+### `GET /api/heart_rate/<patient_id>`
   * Route returns the list of all patient heart rates in a list
-* `GET /api/heart_rate/average/<patient_id>` 
+### `GET /api/heart_rate/average/<patient_id>` 
   * Route returns the total average of the patient id list
-* `POST /api/heart_rate/interval_average` 
+### `POST /api/heart_rate/interval_average` 
   * Route returns the average heart rate since the cutoff time that is entered into the post request. It expects the following input:
   ```
   {
