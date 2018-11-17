@@ -42,7 +42,7 @@
       "heart_rate": 100
   }
   ```
-  * If these three keys are not entered, the server will return the following error message:
+  * If these keys are not entered, the server will return the following error message:
   ```sh
   {"message": 'Required Keys not Present'}
   ```
