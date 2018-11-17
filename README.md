@@ -13,7 +13,7 @@
 * If you would like to increase or decrease the number of patients created, change num_patients on line 84
 
 ## Route Functionality and Messages
-* `POST /api/new_patient`
+### `POST /api/new_patient`
   * Route adds new patients to the database. It expects the following input:
   ```sh
   {
