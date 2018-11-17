@@ -35,7 +35,7 @@
   {'message': 'Added patient 1 successfully to the patient database'}
   ```
 * `POST /api/heart_rate`
- * Route adds patient heart rate data to the database. It expects the following input:
+  * Route adds patient heart rate data to the database. It expects the following input:
   ```sh
   {
       "patient_id": "1", # usually this would be the patient MRN
@@ -46,9 +46,9 @@
   ```sh
   {"message": 'Required Keys not Present'}
   ```
-  * If the patient id alread exists, the server will return the following error message:
+  * If the patient id does not exist, the server will return the following error message:
   ```sh
-  {'message': 'Cannot overwrite current patient information'}
+  {"message": "Patient does not exist, please enter new patient id"},
   ```
   * If a patient is added correctly, the server will return the following message:
   ```sh
