@@ -80,13 +80,13 @@ if __name__ == "__main__":
     except ValueError:
         route_type = 7
 
+    email = 'clarkbulleit@gmail.com'
     num_patients = 5
     id = list(range(1, num_patients+1))
 
     # tests add_new_patient route by deleting current directory and
     # adding the specified number of patients
     if route_type == 1:
-        email = 'clarkbulleit@gmail.com'
 
         # Deletes all prior files in the database
         p = Patient.objects.raw({})
