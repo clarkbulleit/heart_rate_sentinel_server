@@ -135,7 +135,7 @@ def average_heart_rate(patient_id):
         return jsonify(error_messages[out]), 500
 
     try:
-        avg = calc_avg_hr(hr, 1, 1)
+        avg = calc_avg_hr(hr)
     except ZeroDivisionError:
         logging.warning(error_messages[2])
         return jsonify(error_messages[2]), 500
