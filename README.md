@@ -1,4 +1,3 @@
-# heart_rate_sentinel_server
 # Heart Rate Sentinel Server
 
 
@@ -10,8 +9,20 @@
 * The script should print information about 6 options to show the functionality of each of the 6 server routes
 * Enter the desired route
 * It is recommended that you run the client script 6 times in the order 1 to 6 to see all route functionality
+* If you would like to change the email to your own, go to line 83 of the client.py file and enter your own email
+* If you would like to increase or decrease the number of patients created, change num_patients on line 84
 
 ## Route Functionality and Messages
+* `POST /api/new_patient`
+Expects the following input:
+  ```sh
+  {
+      "patient_id": "1", # usually this would be the patient MRN
+      "attending_email": "suyash.kumar@duke.edu", 
+      "user_age": 50, # in years
+  }
+  ```
+
 * Warning: n Rows with non-numeric inputs were not imported
 * Info: test_data.csv was read and validated
 * Warning: No beats were detected: 
