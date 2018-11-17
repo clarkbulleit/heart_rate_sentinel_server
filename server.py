@@ -195,4 +195,8 @@ def int_average_hr():
 if __name__ == "__main__":
     connect("mongodb://clarkbulleit:goduke112@ds037778.mlab.com:"
             "37778/patients_cb329")
-    app.run(host="127.0.0.1", port=5002)
+
+    # First option is for development
+    # Second option is for deployment
+    # app.run(host="127.0.0.1", port=5002)
+    app.run(host="0.0.0.0", port=5002)
