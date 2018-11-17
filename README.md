@@ -70,6 +70,27 @@
     "is_tachycardic": false,
   }
   ```
+  
+* `GET /api/status/<patient_id>`
+  * Route returns the current status of the patient and the time based on the most recent heart rate. The server will return the following message:
+   ```sh
+  {'Patient 1 is tachycardic': False, 'Time': '2018-11-17 13:06:05.418068'}
+  ```
+
+* `GET /api/heart_rate/<patient_id>`
+  * Route returns the list of all patient heart rates in a list
+* `GET /api/heart_rate/average/<patient_id>` 
+  * Route returns the total average of the patient id list
+* `POST /api/heart_rate/interval_average` 
+  * Route returns the average heart rate since the cutoff time that is entered into the post request. It expects the following input:
+  ```
+  {
+      "patient_id": "1",
+      "heart_rate_average_since": "2018-03-09 11:00:36.372339" // date string
+  }
+  ```
+  
+
 
 
 
