@@ -5,7 +5,7 @@ from validate_post_inputs import validate_post_inputs
 from is_tachycardic import is_tachycardic
 import datetime
 import logging
-from first_sendgrid_email import send_email
+from send_email import send_email
 from calc_avg_hr import calc_avg_hr
 from validate_GET_request import validate_get_request
 app = Flask(__name__)
