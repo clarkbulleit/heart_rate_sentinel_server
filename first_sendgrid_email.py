@@ -4,13 +4,13 @@ import sendgrid
 from sendgrid.helpers.mail import *
 
 
-def send_email(patient_id, timestamp):
+def send_email(attending_email, patient_id, timestamp):
     sg = sendgrid.SendGridAPIClient(apikey='SG.lpj1iTqMRtmDXd5GC'
                                            'xoiHQ.rXDJvAce_fNivEw'
                                            'ZMKC53uIE9Quq-ocTHAX9w'
                                            'gUAwzg')
     from_email = Email("clark.bulleit@duke.edu")
-    to_email = Email("clarkbulleit@gmail.com")
+    to_email = Email(attending_email)
     subject = "Patient {} is tachycardic".format(patient_id)
     content = Content("text/plain", "Patient is tachycardic at {}"
                       .format(timestamp))
