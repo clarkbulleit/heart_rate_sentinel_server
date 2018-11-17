@@ -16,6 +16,7 @@ error_messages = {
         3: {"message": "heart rate list contains non numeric inputs"},
         4: {"message": 'Required Keys not Present'},
         5: {"message": 'Cannot overwrite current patient information'},
+        6: {"message": 'No heart rates exist after this time'}
             }
 
 
@@ -68,8 +69,8 @@ def post_heart_rate():
     p.is_tachycardic = tachy
     p.save()
 
-    if tachy:
-        send_email(r['patient_id'], timestamp)
+    # if tachy:
+    # send_email(r['patient_id'], timestamp)
 
     result = {
         "message": "Added heart rate data for user {0} successfully "
@@ -90,12 +91,8 @@ def status(patient_id):
     tachy = p.is_tachycardic
     timestamp = p.time[-1]
 
-    result = {
-        "is_tachycardic": tachy,
-        "time": timestamp,
-    }
-
-    return jsonify(result)
+    return jsonify({"Patient {} is tachycardic".format(patient_id): tachy,
+                    "Time": timestamp})
 
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
@@ -127,8 +124,8 @@ def average_heart_rate(patient_id):
     except TypeError:
         return jsonify(error_messages[3]), 500
 
-    return jsonify({"message": "The patients average "
-                               "heart rate is {}".format(avg)})
+    return jsonify({"message": "Patient {}'s average "
+                               "heart rate is {} bpm".format(patient_id, avg)})
 
 
 @app.route("/api/heart_rate/interval_average", methods=["POST"])
@@ -140,18 +137,28 @@ def int_average_hr():
     except KeyError:
         return jsonify(error_messages[4]), 500
 
-    date = datetime.datetime.strptime(r["heart_rate_average_since"],
-                                      '%Y-%m-%d %H:%M:%S.%f')
-
     try:
         p = Patient.objects.raw({"_id": r["patient_id"]}).first()
     except Patient.DoesNotExist:
         return jsonify(error_messages[1]), 500
     hr = p.heart_rate
     times = p.time
+    date = r["heart_rate_average_since"]
 
-    avg_hr_since = calc_avg_hr(hr, times, date)
-    return jsonify(avg_hr_since)
+    try:
+        avg_hr_since = calc_avg_hr(hr, times, date)
+    except ZeroDivisionError:
+        return jsonify(error_messages[2]), 500
+    except TypeError:
+        return jsonify(error_messages[3]), 500
+    except UnboundLocalError:
+        return jsonify(error_messages[6]), 500
+
+    return jsonify({"message": "The patients average "
+                               "heart rate since {} "
+                               "is {} bpm".format(
+                                r['heart_rate_average_since'],
+                                avg_hr_since)})
 
 
 if __name__ == "__main__":
