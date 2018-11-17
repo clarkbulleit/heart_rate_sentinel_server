@@ -1,5 +1,20 @@
 
 def validate_post_inputs(r, route):
+    """ Validates input keys for 3 POST routes
+
+    This function works for all 3 POST routes
+    and  works based on the route number
+    1: add_patient POST route
+    2: heart_rate POST route
+    3: heart_rate/interval_average POST route
+
+    Args:
+        r (dict): dictionary parsed from POST input
+        route (int): Route number key
+
+    Returns:
+        Error: KeyError if keys are not valid for the corresponding route
+    """
     if route == 1:
         patient_keys = [
             "patient_id",

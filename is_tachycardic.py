@@ -1,6 +1,18 @@
 
 
 def is_tachycardic(hr, age):
+    """ Determines if patient is tachycardic
+
+    Function only works for patients older than 1 year
+    old.
+
+    Args:
+        hr (int): most current heart rate for patient
+        age (int): patient age
+
+    Returns:
+        bool: true if patient is tachycardic, false if not
+    """
     if hr > 186:
         tachy = True
     elif hr > 151 and 1 <= age <= 2:

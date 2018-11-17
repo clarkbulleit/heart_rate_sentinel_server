@@ -4,8 +4,10 @@ from patients import Patient
 from pymodm import connect
 import datetime
 
-# url = 'http://vcm-7335.vm.duke.edu:5002/'
-url = 'http://127.0.0.1:5002/'
+# Configured to hit virtual machine server
+# Change to other url if running on own machine
+url = 'http://vcm-7335.vm.duke.edu:5002/'
+# url = 'http://127.0.0.1:5002/'
 
 
 def client_add_new_patient(id, email, age):
@@ -63,13 +65,20 @@ if __name__ == "__main__":
     connect("mongodb://clarkbulleit:goduke112@ds037778.mlab.com:"
             "37778/patients_cb329")
 
-    route_type = 6
-    # 1: Functions of api/add_patient POST route
-    # 2: Functions of api/heart_rate POST route
-    # 3: Functions of api/status GET route
-    # 4: Functions of api/heart_rate GET route
-    # 5: Functions of api/heart_rate/average GET route
-    # 6: Functions of api/heart_rate/interval_average Post route
+    print("Enter 1 to run Functions of api/add_patient POST route")
+    print("Enter 2 to run Functions of api/heart_rate POST route")
+    print("Enter 3 to run Functions of api/status GET route")
+    print("Enter 4 to run Functions of api/heart_rate GET route")
+    print("Enter 5 to run Functions of api/heart_rate/average GET route")
+    print("Enter 6 to run Functions of api/heart_rate/"
+          "interval_average Post route")
+
+    route = input("Enter Route Number ")
+
+    try:
+        route_type = int(route)
+    except ValueError:
+        route_type = 7
 
     num_patients = 5
     id = list(range(1, num_patients+1))
@@ -154,3 +163,6 @@ if __name__ == "__main__":
         for x in id:
             interval = client_post_interval(x, time_now)
             print(interval.json())
+
+    if route_type == 7:
+        print("Please enter and integer and run client.py again")

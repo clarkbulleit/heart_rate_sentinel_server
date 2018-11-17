@@ -2,6 +2,21 @@ from patients import Patient
 
 
 def validate_get_request(patient_id):
+    """ Validates inputs for all get requests in route
+
+    Function will return code that corresponds to an error
+    message.
+    0: Integer not entered
+    1: Patient doesnt exist
+    2: Heart rate list is empty
+    3: Request is valid
+
+    Args:
+        patient_id (int): patient id number
+
+    Returns:
+        int: code 0-3 corresponding to error messages
+    """
 
     try:
         int(patient_id)
