@@ -12,11 +12,13 @@ def calc_avg_hr(hr, times=1, cutoff_time=1):
     function will calculate the average heart rate since that
     cutoff time.
 
-    :param hr: List of heart rates
-    :param times: List of times corresponding to the heart rates
-    :param cutoff_time: String
+    Args:
+        hr (list): List of heart rates for patient
+        times (list): List of times corresponding to the heart rates
+        cutoff_time (str): Cutoff time for calculation
 
-    :return: Average heart rate, float
+    Returns:
+        avg (float): Average heart rate
     """
     hr_since = []
     if cutoff_time == 1:
