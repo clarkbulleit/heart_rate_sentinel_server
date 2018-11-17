@@ -14,7 +14,7 @@
 
 ## Route Functionality and Messages
 * `POST /api/new_patient`
-Expects the following input:
+  * Route adds new patients to the database. It expects the following input:
   ```sh
   {
       "patient_id": "1", # usually this would be the patient MRN
@@ -22,7 +22,10 @@ Expects the following input:
       "user_age": 50, # in years
   }
   ```
-
+  * If the keys are not correct, the server will return the following error message:
+  ```sh
+  {"message": 'Required Keys not Present'}
+  ```
 * Warning: n Rows with non-numeric inputs were not imported
 * Info: test_data.csv was read and validated
 * Warning: No beats were detected: 
