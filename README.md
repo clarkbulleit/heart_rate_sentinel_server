@@ -3,8 +3,8 @@
 
 
 ## How to Run
+* Clone the heart_rate_sentinel_server onto your machine
 * The server.py file should already be running on http://vcm-7335.vm.duke.edu:5002/
-* Clone this repository onto your machine
 * Initialize the virtual environment by running `pip install -r requirements.txt` in the terminal
 * Run the client.py file 
 * The script should print information about 6 options to show the functionality of each of the 6 server routes
