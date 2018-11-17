@@ -32,14 +32,45 @@
   ```
   * If a patient is added correctly, the server will return the following message:
   ```sh
-  {'message': 'Added user 1 successfully to the patient database'}
+  {'message': 'Added patient 1 successfully to the patient database'}
   ```
-* Warning: n Rows with non-numeric inputs were not imported
-* Info: test_data.csv was read and validated
-* Warning: No beats were detected: 
-* Warning: The heart rate is below normal range
-* Warning: The hear rate exceeds normal range
-* Info: Metrics have been written to test_data.json in the output_data folder
+* `POST /api/heart_rate`
+ * Route adds patient heart rate data to the database. It expects the following input:
+  ```sh
+  {
+      "patient_id": "1", # usually this would be the patient MRN
+      "heart_rate": 100
+  }
+  ```
+  * If these three keys are not entered, the server will return the following error message:
+  ```sh
+  {"message": 'Required Keys not Present'}
+  ```
+  * If the patient id alread exists, the server will return the following error message:
+  ```sh
+  {'message': 'Cannot overwrite current patient information'}
+  ```
+  * If a patient is added correctly, the server will return the following message:
+  ```sh
+  {'message': 'Added heart rate data for user 1 successfully to the patient database'}
+  ```
+  * If the posted heart rate is determined to be tachycardic based on the age of the patient, an email will be sent to the attending email
+  * The database entry for the patient will then be the following:
+  ```sh
+  {
+    "_id": 1,
+    "attending_email": "clarkbulleit@gmail.com",
+    "user_age": 65,
+    "heart_rate": [
+        104,
+    ],
+    "time": [
+        "2018-11-17 13:06:04.108997",
+    ],
+    "is_tachycardic": false,
+  }
+  ```
+
 
 
 ## Functions
