@@ -1,7 +1,23 @@
 import datetime
 
 
-def calc_avg_hr(hr, times, cutoff_time):
+def calc_avg_hr(hr, times=1, cutoff_time=1):
+    """ Calculates average heart rate based on inputs
+
+    If only heart rate data is input into the function,
+    the function will calculate the total average of
+    the heart rate list.
+
+    If a list of times and a cutoff time are entered, the
+    function will calculate the average heart rate since that
+    cutoff time.
+
+    :param hr: List of heart rates
+    :param times: List of times corresponding to the heart rates
+    :param cutoff_time: String
+
+    :return: Average heart rate, float
+    """
     hr_since = []
     if cutoff_time == 1:
         avg = sum(hr)/len(hr)
