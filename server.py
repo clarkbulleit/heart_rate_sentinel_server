@@ -3,7 +3,8 @@ from patients import Patient
 from pymodm import connect
 from validate_post_inputs import validate_post_inputs
 from is_tachycardic import is_tachycardic
-import datetime, logging
+import datetime
+import logging
 from first_sendgrid_email import send_email
 from calc_avg_hr import calc_avg_hr
 from validate_GET_request import validate_get_request
@@ -116,7 +117,8 @@ def get_heart_rate(patient_id):
 
     if out == 3:
         p = Patient.objects.raw({"_id": int(patient_id)}).first()
-        logging.warning("Heart rates for patient {} returned".format(patient_id))
+        logging.warning("Heart rates for patient {} returned"
+                        .format(patient_id))
         return jsonify(p.heart_rate)
     else:
         logging.warning(error_messages[out])

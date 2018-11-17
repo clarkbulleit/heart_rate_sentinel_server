@@ -68,7 +68,8 @@ if __name__ == "__main__":
     print("Enter 3 to run Functions of api/status GET route")
     print("Enter 4 to run Functions of api/heart_rate GET route")
     print("Enter 5 to run Functions of api/heart_rate/average GET route")
-    print("Enter 6 to run Functions of api/heart_rate/interval_average Post route")
+    print("Enter 6 to run Functions of api/heart_rate/"
+          "interval_average Post route")
 
     route = input("Enter Route Number ")
 
